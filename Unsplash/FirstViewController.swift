@@ -7,33 +7,35 @@
 
 import UIKit
 
+fileprivate let MAIN_SEGUE_NAME = "openVC"
+
+
 class FirstViewController: UIViewController, UISearchBarDelegate {
     
-    @IBOutlet weak var welcomeImage: UIImageView!
     @IBOutlet weak var searchBar: UISearchBar!
-    var stringRequest: String?
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        let tap = UITapGestureRecognizer(target: self, action: #selector(UIInputViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
         searchBar.delegate = self
-        //welcomeImage.image = UIImage(named: "Rome")
     }
-
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
+    @objc func dismissKeyboard() {
         searchBar.resignFirstResponder()
-        if let text = searchBar.text {
-            self.stringRequest = text
-        }
-
     }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+    }
+     
 
     @IBAction func findImage(_ sender: Any) {
-        performSegue(withIdentifier: "openVC", sender: nil)
+        guard searchBar.text != nil && searchBar.text != "" else {return}
+        performSegue(withIdentifier: MAIN_SEGUE_NAME, sender: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "openVC", let vc = segue.destination as? ViewController, let request = stringRequest {
+        if segue.identifier == MAIN_SEGUE_NAME, let vc = segue.destination as? ViewController, let request = searchBar.text, request != "" {
             vc.queryOptional = request
         }
     }

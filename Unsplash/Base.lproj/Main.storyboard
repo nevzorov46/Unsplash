@@ -51,19 +51,28 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Images Found" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="spI-nI-1ND">
+                                <rect key="frame" x="109" y="405.5" width="196.5" height="31.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="DRQ-5H-R3r" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="044-UY-b0k"/>
                             <constraint firstItem="DRQ-5H-R3r" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="4x3-xe-YWv"/>
+                            <constraint firstItem="spI-nI-1ND" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Cia-JD-qMw"/>
                             <constraint firstItem="DRQ-5H-R3r" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Uij-Ag-iYB"/>
                             <constraint firstItem="DRQ-5H-R3r" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="hpw-d0-hug"/>
+                            <constraint firstItem="spI-nI-1ND" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="zuj-cj-dTv"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="not-bQ-dJM"/>
                     <connections>
                         <outlet property="imagesCollectionView" destination="DRQ-5H-R3r" id="E3c-qw-cEb"/>
+                        <outlet property="noImagesLabel" destination="spI-nI-1ND" id="WYk-O1-8z0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

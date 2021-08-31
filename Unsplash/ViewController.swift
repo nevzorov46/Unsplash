@@ -7,21 +7,20 @@
 
 import UIKit
 
+fileprivate let CLIENT_ID = "pb4AHq38jJjrIN1UZLV88xdW2ROfuhPxT2w-2DlQ20w"
+
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    
-    var queryOptional: String?
-    let url = "https://api.unsplash.com/search/photos?page=1&per_page=50&query=sea&client_id=pb4AHq38jJjrIN1UZLV88xdW2ROfuhPxT2w-2DlQ20w"
-    
-    
-    var response: [Results] = []
-    
     @IBOutlet weak var imagesCollectionView: UICollectionView!
+    @IBOutlet weak var noImagesLabel: UICollectionView!
+    var queryOptional: String?
+    var response: [Results] = []
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         imagesCollectionView.delegate = self
         imagesCollectionView.dataSource = self
-
         if let query = queryOptional {
             fetchImages(with: query)
         }
@@ -43,8 +42,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func fetchImages(with query: String) {
-        
-        let url = "https://api.unsplash.com/search/photos?page=1&per_page=50&query=\(query)&client_id=pb4AHq38jJjrIN1UZLV88xdW2ROfuhPxT2w-2DlQ20w"
+        noImagesLabel.isHidden = true
+        let url = "https://api.unsplash.com/search/photos?page=1&per_page=50&query=\(query)&client_id=\(CLIENT_ID)"
         
         guard let url  = URL(string: url) else { return }
         let task = URLSession.shared.dataTask(with: url ) { [weak self] data, _, error in
@@ -55,6 +54,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
                 let jsonResult = try JSONDecoder().decode(APIResponse.self, from: data)
                 self?.response = jsonResult.results
                 DispatchQueue.main.async {
+                    if self?.response.isEmpty == true {
+                        self?.noImagesLabel.isHidden = false
+                    }
+                    else {
+                        self?.noImagesLabel.isHidden = true
+                    }
                     self?.imagesCollectionView.reloadData()
                 }
             }
