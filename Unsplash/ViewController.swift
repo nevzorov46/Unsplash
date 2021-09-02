@@ -9,14 +9,16 @@ import UIKit
 
 fileprivate let CLIENT_ID = "pb4AHq38jJjrIN1UZLV88xdW2ROfuhPxT2w-2DlQ20w"
 
+
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    let url = "https://api.unsplash.com/search/photos?page=1&per_page=50&query=кот&client_id=pb4AHq38jJjrIN1UZLV88xdW2ROfuhPxT2w-2DlQ20w"
     
     @IBOutlet weak var imagesCollectionView: UICollectionView!
     @IBOutlet weak var noImagesLabel: UICollectionView!
     var queryOptional: String?
     var response: [Results] = []
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         imagesCollectionView.delegate = self
@@ -43,9 +45,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func fetchImages(with query: String) {
         noImagesLabel.isHidden = true
+
         let url = "https://api.unsplash.com/search/photos?page=1&per_page=50&query=\(query)&client_id=\(CLIENT_ID)"
         
-        guard let url  = URL(string: url) else { return }
+        guard let escapingString = url.addingPercentEncoding(withAllowedCharacters: NSCharacterSet.urlQueryAllowed),
+              
+        let url  = URL(string: escapingString) else { return }
         let task = URLSession.shared.dataTask(with: url ) { [weak self] data, _, error in
             guard let data = data, error == nil else {
                 return
